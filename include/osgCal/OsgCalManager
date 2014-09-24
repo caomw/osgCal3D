@@ -1,0 +1,78 @@
+#ifndef _OsgCalManager_H
+#define _OsgCalManager_H
+
+#include <osgCal/Export>
+
+#include <osgCal/CoreModel>
+//#include "../AnimationEventAction.h"
+
+//deprecated but used as i dont know which while class while replace it botj under nux and dows
+//try unordered_map when	 new c++ standard upcome
+#include <hash_map>
+
+
+
+#include <string>
+
+
+using namespace std;
+
+
+
+
+
+namespace osgCal{
+    typedef std::string CoreModelID;
+
+/*struct eqstr
+{
+  bool operator()(CoreModelID s1, CoreModelID s2) const
+  {
+    return s1==s2;
+  }
+};*/
+
+
+	
+
+	/** Manage the loading of osgCal3d Model       */
+class OSGCAL_EXPORT OsgCalManager   {
+    private:
+    //store our models template
+
+		map <CoreModelID, CoreModel*  > store;
+   
+    static OsgCalManager *_instance;
+
+
+	public:
+
+	static OsgCalManager* get(){
+			if(_instance==NULL){
+				_instance=new OsgCalManager();
+			}
+			return(_instance);
+		}
+
+	///return the Coremodl with the given name NULL if it's not store
+CoreModel * getCoreModel(const CoreModelID &Name);
+
+	map <CoreModelID,CoreModel *> & getContent(){return store;}
+
+	//add a corModel
+	void addCore(CoreModelID&,CoreModel*);
+
+
+	protected:
+	///cosntructor
+	OsgCalManager(){};
+	~OsgCalManager();
+
+
+
+
+
+	};
+}
+#endif
+
